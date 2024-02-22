@@ -1,0 +1,160 @@
+-- TABLE STRUCTURE:
+
+
+CREATE TABLE galaxy (
+    galaxy_id SERIAL NOT NULL PRIMARY KEY,
+    star_id INTEGER  NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    mass NUMERIC,
+	age_in_millions_of_years INT,
+    distance_from_earth NUMERIC,
+    galaxy_type TEXT,
+	number_of_star INT,
+	number_of_planet INT,
+    has_life BOOLEAN,
+    has_blackhole BOOLEAN
+);
+
+CREATE TABLE star (
+    star_id SERIAL NOT NULL PRIMARY KEY,
+    galaxy_id INTEGER NOT NULL,
+    planet_id INTEGER NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    mass NUMERIC,
+    age_in_millions_of_years INT,
+    distance_from_earth NUMERIC,
+    temperature INT, 
+    has_life BOOLEAN,
+    is_spherical BOOLEAN
+);
+
+CREATE TABLE planet (
+    planet_id SERIAL NOT NULL PRIMARY KEY,
+    star_id INTEGER  NOT NULL,
+    moon_id INTEGER  NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    mass NUMERIC,
+    age_in_millions_of_years INT,
+    distance_from_earth NUMERIC,
+    temperature INT, 
+    has_life BOOLEAN,
+    is_spherical BOOLEAN
+);
+
+CREATE TABLE moon (
+    moon_id SERIAL NOT NULL PRIMARY KEY,
+    planet_id INTEGER NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    mass NUMERIC,
+    age_in_millions_of_years INT,
+    distance_from_earth NUMERIC,
+    temperature INT, 
+    has_life BOOLEAN,
+    is_spherical BOOLEAN
+);
+
+CREATE TABLE more_info (
+    more_info_id SERIAL NOT NULL PRIMARY KEY,
+    object_id INTEGER,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    description TEXT
+);
+
+
+-- DUMMY DATA:
+
+-- Inserting data into the galaxy table
+INSERT INTO galaxy (star_id, name, mass, age_in_millions_of_years, distance_from_earth, galaxy_type, description, number_of_star, number_of_planet, has_life, has_blackhole)
+VALUES 
+    (1, 'Milky Way', 5.972e24, 13000, 25000, 'Spiral', 'The Milky Way is the galaxy that contains our Solar System', 400000000, 8, false, true),
+    (2, 'Andromeda', 1.76e12, 10000, 2500000, 'Spiral', 'The Andromeda Galaxy is the nearest spiral galaxy to the Milky Way', 1000000000, 5, false, true),
+    (3, 'Triangulum', 6.8e10, 5000, 3000000, 'Spiral', 'The Triangulum Galaxy is a spiral galaxy approximately 3 million light-years from Earth', 200000000, 3, false, false),
+    (4, 'Messier 81', 1.5e11, 8000, 12000000, 'Spiral', 'Messier 81 is a spiral galaxy approximately 12 million light-years away', 80000000, 2, false, false),
+    (5, 'Messier 87', 6.5e11, 10000, 50000000, 'Elliptical', 'Messier 87 is a supergiant elliptical galaxy in the constellation Virgo', 500000000, 1, false, true),
+    (6, 'NGC 4594', 2.1e11, 6000, 35000000, 'Lenticular', 'NGC 4594 is a lenticular galaxy in the constellation Virgo', 200000000, 1, false, false);
+
+-- Galaxy table
+INSERT INTO galaxy (star_id, name, mass, age_in_millions_of_years, distance_from_earth, galaxy_type, number_of_star, number_of_planet, has_life, has_blackhole)
+VALUES
+(1, 'Milky Way', 8.56e11, 13000, 25000, 'Spiral', 200000000, 1000000000, TRUE, TRUE),
+(2, 'Andromeda', 1.23e12, 14000, 27500, 'Spiral', 300000000, 1200000000, FALSE, FALSE),
+(3, 'Triangulum', 6.78e10, 9000, 23000, 'Irregular', 50000000, 500000000, FALSE, FALSE),
+(4, 'Messier 87', 3.45e12, 20000, 60000, 'Elliptical', 100000000, 800000000, FALSE, TRUE),
+(5, 'Sombrero', 2.67e11, 11000, 33000, 'Spiral', 80000000, 600000000, TRUE, FALSE),
+(6, 'Pinwheel', 1.89e11, 10000, 27000, 'Spiral', 60000000, 400000000, TRUE, FALSE);
+
+-- Star table
+INSERT INTO star (galaxy_id, planet_id, name, mass, age_in_millions_of_years, distance_from_earth, temperature, has_life, is_spherical)
+VALUES
+(1, 1, 'Sun', 1.989e30, 4500, 149.6e6, 5778, TRUE, TRUE),
+(1, 2, 'Proxima Centauri', 2.447e29, 5600, 4.24, 3042, FALSE, TRUE),
+(2, 3, 'Alpha Centauri A', 2.192e30, 6500, 4.37, 5790, TRUE, TRUE),
+(2, 4, 'Alpha Centauri B', 1.773e30, 6000, 4.37, 5260, TRUE, TRUE),
+(3, 5, 'Barnard''s Star', 3.942e29, 10000, 5.96, 3134, FALSE, FALSE),
+(3, 6, 'Wolf 359', 1.78e29, 5000, 7.78, 2800, FALSE, TRUE);
+
+-- Planet table
+INSERT INTO planet (star_id, moon_id, name, mass, age_in_millions_of_years, distance_from_earth, temperature, has_life, is_spherical)
+VALUES
+(1, 1, 'Earth', 5.972e24, 4500, 149.6e6, 288, TRUE, TRUE),
+(1, 2, 'Mars', 6.417e23, 4500, 227.9e6, 218, FALSE, TRUE),
+(2, 3, 'Proxima Centauri b', 7.327e25, 5600, 4.24, 234, FALSE, TRUE),
+(2, 4, 'Proxima Centauri c', 9.321e24, 5600, 4.24, 211, FALSE, TRUE),
+(3, 5, 'Venus', 4.867e24, 4500, 108.2e6, 737, FALSE, TRUE),
+(3, 6, 'Mercury', 3.285e23, 4500, 57.9e6, 440, FALSE, TRUE),
+(4, 7, 'Jupiter', 1.898e27, 5000, 778.6e6, 165, FALSE, TRUE),
+(4, 8, 'Saturn', 5.683e26, 5000, 1.43e9, 134, FALSE, TRUE),
+(5, 9, 'Neptune', 1.024e26, 5000, 4.5e9, 72, FALSE, TRUE),
+(5, 10, 'Uranus', 8.681e25, 5000, 2.88e9, 53, FALSE, TRUE),
+(6, 11, 'Pluto', 1.309e22, 5000, 5.9e9, 44, FALSE, TRUE),
+(6, 12, 'Ceres', 9.383e20, 5000, 414e6, 167, FALSE, TRUE);
+
+-- Moon table
+INSERT INTO moon (planet_id, name, mass, age_in_millions_of_years, distance_from_earth, temperature, has_life, is_spherical)
+VALUES
+(1, 'Moon', 7.342e22, 4500, 384400, 220, FALSE, TRUE),
+(1, 'Phobos', 1.0659e16, 4500, 9376, 233, FALSE, FALSE),
+(1, 'Deimos', 1.4762e15, 4500, 23460, 233, FALSE, FALSE),
+(2, 'Europa', 4.8e22, 4500, 670900, 102, FALSE, TRUE),
+(2, 'Titan', 1.3455e23, 4500, 1.22e6, 94, FALSE, TRUE),
+(2, 'Callisto', 1.0759e23, 4500, 1.882e6, 134, FALSE, TRUE),
+(3, 'Io', 8.9319e22, 4500, 421700, 110, FALSE, TRUE),
+(3, 'Ganymede', 1.4819e23, 4500, 1.07e6, 152, FALSE, TRUE),
+(4, 'Luna', 7.342e22, 5000, 384400, 220, FALSE, TRUE),
+(4, 'Enceladus', 1.08e20, 5000, 238040, 75, FALSE, TRUE),
+(4, 'Rhea', 2.31e21, 5000, 527040, 99, FALSE, TRUE),
+(5, 'Triton', 2.14e22, 5000, 354800, 38, FALSE, TRUE),
+(5, 'Nereid', 3.1e19, 5000, 5513822, 49, FALSE, TRUE),
+(5, 'Proteus', 5.06e19, 5000, 117647, 51, FALSE, TRUE),
+(6, 'Charon', 1.586e21, 5000, 19571, 53, FALSE, TRUE),
+(6, 'Hydra', 4.2e16, 5000, 64738, 51, FALSE, FALSE),
+(6, 'Nix', 4.5e16, 5000, 48694, 51, FALSE, FALSE),
+(6, 'Styx', 7.5e15, 5000, 42164, 51, FALSE, FALSE),
+(6, 'Kerberos', 1.65e16, 5000, 57886, 51, FALSE, FALSE),
+(6, 'Dysnomia', 1.5e18, 5000, 65000, 51, FALSE, FALSE);
+
+-- More info table
+INSERT INTO more_info (object_id, name, description)
+VALUES
+(1, 'Milky Way', 'The Milky Way is the galaxy that contains our Solar System, with the name describing the galaxy''s appearance from Earth: a hazy band of light seen in the night sky.'),
+(2, 'Andromeda', 'Andromeda is a spiral galaxy approximately 2.537 million light-years from Earth, making it the nearest spiral galaxy to the Milky Way.'),
+(3, 'Triangulum', 'Triangulum is a smaller spiral galaxy also known as Messier 33. It is the third-largest member of the Local Group of galaxies, which includes the Milky Way, Andromeda, and about 54 other smaller galaxies.'),
+(4, 'Messier 87', 'Messier 87 is a supergiant elliptical galaxy in the constellation Virgo. It is notable for containing a supermassive black hole at its center, which was the first black hole to be directly imaged by the Event Horizon Telescope in 2019.'),
+(5, 'Sombrero', 'The Sombrero Galaxy is an unbarred spiral galaxy in the constellation Virgo. It is notable for its bright nucleus, which gives it the appearance of a Mexican hat.'),
+(6, 'Pinwheel', 'The Pinwheel Galaxy is a face-on spiral galaxy located in the constellation Ursa Major. It is one of the most prominent spiral galaxies in the sky, known for its well-defined spiral arms and bright core.');
+
+
+-- CONNECTING FOREIGN KEY / REFERENCES
+
+ALTER TABLE galaxy    ADD PRIMARY KEY (galaxy_id);
+ALTER TABLE star      ADD PRIMARY KEY (star_id);
+ALTER TABLE planet    ADD PRIMARY KEY (planet_id);
+ALTER TABLE moon      ADD PRIMARY KEY (moon_id);
+ALTER TABLE more_info ADD PRIMARY KEY (more_info_id);
+
+ALTER TABLE galaxy ADD FOREIGN KEY (star_id)   REFERENCES star   (star_id);
+ALTER TABLE star   ADD FOREIGN KEY (galaxy_id) REFERENCES galaxy (galaxy_id);
+ALTER TABLE star   ADD FOREIGN KEY (planet_id) REFERENCES planet (planet_id);
+ALTER TABLE planet ADD FOREIGN KEY (star_id)   REFERENCES star   (star_id);
+ALTER TABLE planet ADD FOREIGN KEY (moon_id)   REFERENCES moon   (moon_id);
+ALTER TABLE moon   ADD FOREIGN KEY (planet_id) REFERENCES planet (planet_id);
