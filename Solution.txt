@@ -1,3 +1,12 @@
+-- Initial Step
+
+psql --username=freecodecamp --dbname=postgres 
+
+-- Create universe database and connect
+
+CREATE DATABASE universe;
+\c universe;
+
 -- TABLE STRUCTURE:
 
 
