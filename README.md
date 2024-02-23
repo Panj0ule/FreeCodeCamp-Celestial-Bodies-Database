@@ -1,4 +1,4 @@
-# FreeCodeCamp-Celestial-Body-Database
+# FreeCodeCamp-Celestial-Bodies-Database
  Excercise by build a database of celestial bodies using PostgreSQL.
 
 This is the result to complete the Celestial Bodies Database project. 
